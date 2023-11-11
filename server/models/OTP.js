@@ -18,7 +18,7 @@ createdAt:{
 
 });
 
-
+  
 // send Email
 async function sendVerificationEmail(email,otp){
 
