@@ -2,6 +2,9 @@ const User = require("../models/User");
 const OTP = require("../models/OTP");
 const otpGenerator = require("otp-generator");
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+require("dotenv").config();
+
 
 //send Otp
 exports.sendOTP = async (req, res) => {
@@ -188,19 +191,65 @@ exports.login = async(req,res)=>{
         //check user exist or not
         const user = await User.findOne({email}).populate("additionalDetails");
 
-        //compare password
-
+        if(!user){
+          return res.status(401).json({
+            success:false,
+            message:"User is not Registered!"
+          })
+        }
+        
+        //compare password and 
         //generate jwt token
 
-        //create cookie and send response
+        if(await bcrypt.compare(password, user.password)){
+          const payload = {
+            email:user.email,
+            if:user._id,
+            role:user.accountType
+          }
+          const token = jwt.sign(payload, process.env.JWT_SECRET,{
+            expiresIn:"2h"
+          })
+          
+          user.token = token;
+          user.password = undefined;
         
+        //create cookie and send response
+        const options ={
+          expires:new Date(Date.now() + 3*24*60*60*1000),
+          httpOnly:true
+        }
+        res.cookie("token",token,options).status(200).json({
+          success:true,
+          token,
+          user
+        })
+      }
+      else{
+
+        return res.status(401).json({
+          success:false,
+          message:"password is incorrect"
+        })
+      }
 
     }
     catch(err){
-
+      console.log(err);
+      return res.status(401).json({
+        success:false,
+        message:"Login Failed!"
+      })
 
     }
 
 }
 
 //ChangePassword
+
+exports.changePassword = async (req,res)=>{
+
+  //get data from req.body
+
+
+}
