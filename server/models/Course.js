@@ -22,21 +22,24 @@ const courseSchema = new mongoose.Schema({
      },
      ratingAndReviews:[
         {
-            type:mongoose.Schema.Types.ObjectId,
+        type:mongoose.Schema.Types.ObjectId,
         ref:"RatingAndReview"
         }
     ],
-     
+
     price:{
         type:Number
-     },
+    },
+
     tag:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"Tag"
      },
+    
      thumbnail:{
         type:String
      },
+    
      studentsEnrolled:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"User"
@@ -45,6 +48,5 @@ const courseSchema = new mongoose.Schema({
 });
 
 
+
 module.exports = mongoose.model("Course", courseSchema);
-
-

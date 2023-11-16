@@ -6,7 +6,8 @@ const bcrypt = require('bcrypt');
 exports.resetPasswordToken = async(req,res)=>{
 
     try{ 
-       //get email from body
+
+    //get email from body
     const email = req.body.email;
 
     //check user for this email
@@ -18,9 +19,11 @@ exports.resetPasswordToken = async(req,res)=>{
             message:"email is not registered!"
         })
     }
+   
     //generate token
 
-    const token = crypto.randomUUID()
+    const token = crypto.randomUUID();
+    
     //update user by adding token and expiration time
     const updateDetails = await User.findOne({email},{token,resetPasswordExpires:Date.now()+5*60*1000},
     {new:true})

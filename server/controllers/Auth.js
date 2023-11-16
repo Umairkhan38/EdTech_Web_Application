@@ -68,7 +68,8 @@ exports.sendOTP = async (req, res) => {
 //SignUp
 exports.signUp = async (req, res) => {
 
-try   {  // fetch data from req.body
+try {  
+  // fetch data from req.body
   const {
     firstName,
     lastName,
@@ -77,8 +78,9 @@ try   {  // fetch data from req.body
     confirmPassword,
     accountType,
     contactNumber,
-    otp,
+    otp
   } = req.body;
+
 
    //validate Data
    if(!firstName || !lastName || !email || !password || !confirmPassword || !otp){
@@ -88,6 +90,7 @@ try   {  // fetch data from req.body
     })
 
    }
+
     //match the npassword
     if(password!==confirmPassword){
         return res.status(400).json({
@@ -118,7 +121,7 @@ try   {  // fetch data from req.body
         //otp not found
         return res.status(400).json({
             success:false,
-            message3:"OTP Not Found"
+            message:"OTP Not Found"
         })
 
     }
@@ -204,9 +207,10 @@ exports.login = async(req,res)=>{
         if(await bcrypt.compare(password, user.password)){
           const payload = {
             email:user.email,
-            if:user._id,
+            id:user._id,
             role:user.accountType
           }
+          
           const token = jwt.sign(payload, process.env.JWT_SECRET,{
             expiresIn:"2h"
           })

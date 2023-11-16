@@ -16,12 +16,15 @@ try{
         })
     }
 
+
     //verify the token
      try{
+
         const decode = jwt.verify(token,process.env.JWT_SECRET);
         console.log(decode);
         req.user =decode;
      }  
+     
      catch(err){
            return res.status(401).status({
             success:false,
