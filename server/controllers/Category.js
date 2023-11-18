@@ -1,6 +1,6 @@
-const Tags = require('../models/Tags');
+const Category = require('../models/Category');
 
-exports.createTag = async (req,res)=>{
+exports.createCategory = async (req,res)=>{
 
     try{
 
@@ -14,7 +14,7 @@ exports.createTag = async (req,res)=>{
         }
 
         //create an entry in Tag Model
-        const tagDetails = await Tags.create({
+        const tagDetails = await Category.create({
             name,description
         })      
 
@@ -39,10 +39,10 @@ exports.createTag = async (req,res)=>{
 
 //get All tags
 
-exports.getAllTags = async (req,res)=>{
+exports.getAllCategory = async (req,res)=>{
 
     try{
-        const allTags = await Tags.find({}, {name:true,description:true});
+        const allTags = await Category.find({}, {name:true,description:true});
 
          res.status(200).json({
             success:false,

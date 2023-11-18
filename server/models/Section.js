@@ -6,6 +6,7 @@ const SectionSchema = new mongoose.Schema({
     sectionName:{
         type:String
     },
+    
     subSection:[
         {
             type:mongoose.Schema.Types.ObjectId,
@@ -14,10 +15,9 @@ const SectionSchema = new mongoose.Schema({
         }
     ]
 
-
 });
 
-
 module.exports = mongoose.model("Section",SectionSchema);
+
 
 

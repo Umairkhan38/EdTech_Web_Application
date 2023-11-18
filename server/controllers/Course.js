@@ -1,8 +1,8 @@
-const Tags = require('../models/Tags');
 const User = require('../models/User');
 const Section = require('../models/Section');
 const Course = require('../models/Course');
 const {uploadImageToCloudinary} = require('../utils/imageUploader');
+const Category = require('../models/Category');
 
 
 exports.createCourse = async(req,res)=>{
@@ -38,7 +38,7 @@ exports.createCourse = async(req,res)=>{
         }
 
         //check the tag is valid or not
-        const tagDetails = await Tags.findById(tags);
+        const tagDetails = await Category.findById(tags);
 
         if(!tagDetails){
 
@@ -70,15 +70,15 @@ exports.createCourse = async(req,res)=>{
             {_id:instructorDetals._id},
             {
                 $push:{
-                    courses:newCourse.newCourse._id
+                    courses : newCourse._id
                 }
             },
             {new:true}
             )   
 
-            const tagId= tagDetails._id;
-            await Tags.findByIdAndUpdate({tagId},{course:newCourse._id});
 
+            const tagId= tagDetails._id;
+            await Category.findByIdAndUpdate({tagId},{course:newCourse._id});
 
             
             res.status(200).json({
