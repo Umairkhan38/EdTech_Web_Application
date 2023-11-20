@@ -65,7 +65,11 @@ exports.deleteAccount = async (req,res)=>{
 
         await Profile.findByIdAndDelete({_id:userDetails.additionalDetails});
 
+        //unenrolled user from all courses
+        await User.updateOne({_id:id},{$set:{ courses : []}})
+
         await User.findByIdAndDelete({_id:id});
+
 
         return res.status(200).json({
             success:true,

@@ -21,7 +21,8 @@ exports.createSection = async(req,res)=>
             $push:{
                 courseContent:newSection._id
             }
-    },{new:true}).populate("Section").populate("SubSection")
+    },{new:true}).populate("Section").populate("SubSection").exec();
+
 
     res.status(201).json({
         success:true,
@@ -45,12 +46,11 @@ exports.createSection = async(req,res)=>
 
 exports.updateSection=async(req,res)=>{
 
-    
 try {//get data from req.body
     const {sectionId, sectionName} = req.body;
 
     //Validation
-    if(!sectionId || !sectionId){
+    if(!sectionId || !sectionName){
         return res.status(400).json({
             success:false,
             message:"all fields are required"
