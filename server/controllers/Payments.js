@@ -6,6 +6,7 @@ const mailSender = require('../utils/mailSender');
 const {courseEnrollmentEmail } = require('../mail/templates/courseEnrollmentEmail');
 const mongoose = require('mongoose');
 
+
 //capture the payment
 exports.capturePayment = async (req,res)=>{
 
@@ -52,6 +53,7 @@ exports.capturePayment = async (req,res)=>{
     }
 
 
+    
     //order creation
     const amount = course.price;
     const currency = "INR";
@@ -64,8 +66,8 @@ exports.capturePayment = async (req,res)=>{
             courseId,
             userId
         }
-
     }
+
 
     try
     {
@@ -89,4 +91,83 @@ exports.capturePayment = async (req,res)=>{
 
     }
 
+}
+
+
+
+//Signature verification from Server and Razorpay
+exports.verifySignature= async(req,res)=> {
+
+    const webhookSecret = "12356789";
+
+    const signature = req.headers["x-razorpay-signature"];
+
+    const shaSum = crypto.createHmac("sha2566", webhookSecret);
+    shaSum.update(JSON.stringify(req.body))
+    const digest = shaSum.digest("hex");
+
+    if(signature == digest ){
+        console.log("Payment is Authorized");
+
+        const {courseId, userId} = req.body.payload.payment.entity.notes;
+
+        try{
+
+            const enrolledCourse = await Course.findOneAndUpdate(
+                {_id:courseId},
+                {$push:{studentsEnrolled:userId}},
+                {new:true} )
+
+             if(!enrolledCourse){
+                return res.status(404).json({
+                    success:false,
+                    message:"Course Not Found"
+                })
+             }   
+
+             console.log("Enrolled Course is ", enrolledCourse);
+
+             //enrolled course into the student schema
+             const enrollStudent = await User.findOneAndUpdate(
+                {_id:userId},
+                {$push:{courses:courseId}},
+                {new:true} )
+
+                console.log("enroll student ", enrollStudent)
+                
+                //Sending successfull mail
+                const emailResponse = await mailSender(
+                    enrollStudent.email,
+                    "Congratulations from Team - Wisdom Warrior Academy", 
+                    "You are Succesfully enrolled for the course",
+                    
+                    )
+                    
+                    console.log("Email Response ", emailResponse)
+
+                   return res.status(200).json({
+                    success:true,
+                    message:"Signature Verified Successfully!"
+                   }) 
+                   
+                }
+
+                catch(err){
+                    
+                    return res.status(500).json({
+                     success:false,
+                     message:"Failed! to verify Signature! "
+                    }) 
+                    
+                }
+            }
+            
+            else{
+                
+                return res.status(500).json({
+                 success:false,
+                 message:"Invalid Request! "
+                }) 
+
+    }
 }
