@@ -3,6 +3,7 @@ const Section = require('../models/Section');
 const Course = require('../models/Course');
 const {uploadImageToCloudinary} = require('../utils/imageUploader');
 const Category = require('../models/Category');
+const RatingAndReview = require('../models/RatingAndReview');
 
 
 exports.createCourse = async(req,res)=>{
@@ -126,3 +127,52 @@ exports.getAllCourses = async(req,res)=>{
 
     }
 }
+
+
+//Fetch Course Details
+exports.getCourseDetails = async(req,res)=>{
+
+
+    try{
+        //get courseId from body
+        const {courseId} = req.body;
+
+        //find out course details
+        const courseDetails = await Course.find({_id:courseId}).populate({
+            path:"instructor",
+            populate:{
+                path:"additionalDetails"
+            }
+        }).populate("category").populate("ratingAndReviews").populate({
+            path:"courseContent",
+            populate:{
+                path:"subSection"   
+            }
+        }).exec()
+
+        //VALIDATION
+        if(!courseDetails){
+            return res.status(404).json({
+                success:false,
+                mssage:"Couldn't found the course details!"
+            })
+
+        }
+
+        return res.status(200).json({
+            success:true,
+            message:"Course Details Fetched Successfully!"
+        })
+        
+    }
+    catch(err){
+        return res.status(500).json({
+            success:false,
+            message:"Course Details can't be Fetched!"
+        })
+
+    }
+
+}
+
+
