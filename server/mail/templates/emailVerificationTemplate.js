@@ -26,6 +26,7 @@ const otpTemplate = (otp) => {
 			.logo {
 				max-width: 200px;
 				margin-bottom: 20px;
+				background-color:green
 			}
 	
 			.message {
@@ -67,21 +68,23 @@ const otpTemplate = (otp) => {
 	<body>
 		<div class="container">
 			<a href="study-notion-frontend-wheat.vercel.app"><img class="logo"
-					src="https://i.ibb.co/7Xyj3PC/logo.png" alt="StudyNotion Logo"></a>
+					src="https://res.cloudinary.com/socialnetworkcloud/image/upload/v1701104670/fileUploading/logo_cwpdjc.png" alt="wisdom warrior Logo"></a>
+			<div class="message">Wisdom Warrior!</div>
 			<div class="message">OTP Verification Email</div>
 			<div class="body">
 				<p>Dear User,</p>
-				<p>Thank you for registering with StudyNotion. To complete your registration, please use the following OTP
+				<p>Thank you for registering with Wisdom Warrior. To complete your registration, please use the following OTP
 					(One-Time Password) to verify your account:</p>
 				<h2 class="highlight">${otp}</h2>
 				<p>This OTP is valid for 5 minutes. If you did not request this verification, please disregard this email.
 				Once your account is verified, you will have access to our platform and its features.</p>
 			</div>
 			<div class="support">If you have any questions or need assistance, please feel free to reach out to us at <a
-					href="mailto:info@studynotion.com">info@studynotion.com</a>. We are here to help!</div>
+					href="mailto:info@studynotion.com">info@wisdomwarrior.com</a>. We are here to help!</div>
 		</div>
 	</body>
 	
 	</html>`;
 };
+
 module.exports = otpTemplate;

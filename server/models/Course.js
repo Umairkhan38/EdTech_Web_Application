@@ -48,9 +48,11 @@ const courseSchema = new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:"User"
      },
+
      instructions:{
         type:[String]
      },
+     
      status:{
         trype:String,
         enum:["Draft","published"]

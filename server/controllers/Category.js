@@ -1,68 +1,51 @@
-const Category = require('../models/Category');
+const { Mongoose } = require("mongoose");
+const Category = require("../models/Category");
+function getRandomInt(max) {
+    return Math.floor(Math.random() * max)
+  }
 
-exports.createCategory = async (req,res)=>{
+exports.createCategory = async (req, res) => {
+	try {
+		const { name, description } = req.body;
+		if (!name) {
+			return res
+				.status(400)
+				.json({ success: false, message: "All fields are required" });
+		}
+		const CategorysDetails = await Category.create({
+			name: name,
+			description: description,
+		});
+		console.log(CategorysDetails);
+		return res.status(200).json({
+			success: true,
+			message: "Categorys Created Successfully",
+		});
+	} catch (error) {
+		return res.status(500).json({
+			success: true,
+			message: error.message,
+		});
+	}
+};
 
-    try{
+exports.showAllCategories = async (req, res) => {
+	try {
+        console.log("INSIDE SHOW ALL CATEGORIES");
+		const allCategorys = await Category.find({});
+		res.status(200).json({
+			success: true,
+			data: allCategorys,
+		});
+	} catch (error) {
+		return res.status(500).json({
+			success: false,
+			message: error.message,
+		});
+	}
+};
 
-        const {name, description} = req.body;
-        
-        if(!name || !description){
-            return res.status(400).json({
-                success:false,
-                message:"All fields are required!"
-            })
-        }
-
-        //create an entry in Tag Model
-        const tagDetails = await Category.create({
-            name,description
-        })      
-
-        console.log(tagDetails);
-
-        // return successfull response
-        res.status(201).json({
-            success:true,
-            message:"Tag Created Successfully!!"
-        })
-
-    }
-    catch(err){
-
-        return res.status(500).json({
-            success:false,
-            message:err.message
-        })
-    }
-}
-
-
-//get All tags
-
-exports.getAllCategory = async (req,res)=>{
-
-    try{
-        const allTags = await Category.find({}, {name:true,description:true});
-
-         res.status(200).json({
-            success:false,
-            message:"all tags fetched successfully",
-            allTags
-        })
-        
-    }catch(err){
-
-        return res.status(500).json({
-            success:false,
-            message:err.message
-        })
-
-    }
-
-}
-
-
-//get category details to display 
+//categoryPageDetails 
 
 exports.categoryPageDetails = async (req, res) => {
     try {
@@ -139,3 +122,4 @@ exports.categoryPageDetails = async (req, res) => {
       })
     }
   }
+  

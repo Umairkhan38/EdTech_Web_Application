@@ -17,6 +17,9 @@ const userSchema = new mongoose.Schema({
         type:String,
         required:true,
         trim:true
+        /*required: true,
+        match: [/.+\@.+\..+/, 'Please enter a valid email'],
+        validate: [validatePresenceOf, 'Email cannot be blank']*/
     },
     password:{
         type:String,

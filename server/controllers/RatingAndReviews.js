@@ -1,16 +1,18 @@
-const RatingAndReviews = reqiure('../models/RatingAndReviews');
+const RatingAndReviews = require('../models/RatingAndReview');
 const Course  = require('../models/Course');
 const RatingAndReview = require('../models/RatingAndReview');
 
 
-exports.createRatingAndReview = async (req,res) =>{
+
+
+exports.createRating = async (req,res) =>{
 
    try{
     //get user id
     const userId = req.user.id;
 
     //get data from body 
-    const{rating, review, courseId} = req.bod7y;
+    const{rating, review, courseId} = req.body;
 
     //check user is enrolled in a course or not
     const courseDetails = await Course.findOne(
