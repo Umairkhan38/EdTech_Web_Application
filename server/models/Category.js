@@ -10,10 +10,12 @@ const CategorySchema = new mongoose.Schema({
       type:String
    },
    
-   course:{
-      type:mongoose.Schema.Types.ObjectId,
-      ref:"Course"
-   }
+   courses: [
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "Course",
+		},
+	],
             
 });
 

@@ -5,9 +5,10 @@ const Course = require('../models/Course');
 exports.createSection = async(req,res)=>
 {   
 
-  try{  const { courseName, courseId } = req.body;
+  try{  
+    const { sectionName, courseId } = req.body;
 
-    if(!courseName || !courseId){
+    if(!sectionName || !courseId){
 
         return res.status(400).json({
             success:false,
@@ -17,20 +18,26 @@ exports.createSection = async(req,res)=>
 
     const newSection = await Section.create({sectionName});
     
+
     const updateCourseDetails = await Course.findByIdAndUpdate(courseId,{
             $push:{
                 courseContent:newSection._id
             }
-    },{new:true}).populate("Section").populate("SubSection").exec();
-
+    },{new:true}).populate({
+        path: "courseContent",
+        populate: {
+            path: "subSection",
+        },
+    })
+    .exec();
+;
 
     res.status(201).json({
         success:true,
         message:"Section Created Successfully!!",
         updateCourseDetails
     })
-
-    }
+}
     catch(err){
 
         return res.status(500).json({
@@ -83,7 +90,7 @@ catch(err){
 exports.deleteSection = async (req,res) =>{
 
   try{  //get data
-    const {sectionId} = req.params;
+    const {sectionId} = req.body;
 
     // delete the section
     await Section.findByIdAndDelete(sectionId);

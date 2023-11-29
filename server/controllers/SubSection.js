@@ -13,7 +13,7 @@ exports.createSubSection = async (req,res)=>{
 
         //extract video file
         const video = req.files.videoFile;
-
+        
         //Validation
         if(!sectionId || !title || !timeDuration || !description ){
             return res.status(400).json({
@@ -23,7 +23,9 @@ exports.createSubSection = async (req,res)=>{
         }
 
         //upload a video
-        const uploadVideo = await uploadImageToCloudinary(video, process.env.FOLDER_NAME)
+        const uploadVideo = await uploadImageToCloudinary(video, process.env.FOLDER_NAME,1000,1000);
+
+        console.log("video uploading ",uploadVideo)
 
         //create a sub section
         const subSectionDetails = await SubSection.create({
@@ -33,13 +35,17 @@ exports.createSubSection = async (req,res)=>{
             videoUrl: uploadVideo.secure_url
         })
 
+        console.log("subSection Details are ",subSectionDetails._id);
+
 
         //update sub-section in a section schema
-        const updateSection = await Section.findByIdAndUpdate({_id:SubSection._id},{
+        const updateSection = await Section.findByIdAndUpdate({_id:sectionId},{
             $push:{
                 subSection:subSectionDetails._id
             }
-        },{new:ture}).populate("SubSection")
+        }).populate("subSection")
+        
+        // console.log("Updated Subsection is ", updateSection)
 
         //resposne 
         return res.status(200).json({

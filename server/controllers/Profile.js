@@ -5,6 +5,7 @@ const User = require("../models/User");
 const { uploadImageToCloudinary } = require("../utils/imageUploader");
 // const { convertSecondsToDuration } = require("../utils/secToDuration");
 // Method for updating a profile
+
 exports.updateProfile = async (req, res) => {
 	try {
 	  const {
@@ -15,17 +16,21 @@ exports.updateProfile = async (req, res) => {
 		contactNumber = "",
 		gender = "",
 	  } = req.body
+	  
 	  const id = req.user.id
   
 	  // Find the profile by id
 	  const userDetails = await User.findById(id)
 	  const profile = await Profile.findById(userDetails.additionalDetails)
   
-	  const user = await User.findByIdAndUpdate(id, {
-		firstName,
-		lastName,
-	  })
-	  await user.save()
+	  
+	 if(firstName && lastName){
+		 const user = await User.findByIdAndUpdate(id, {
+		   firstName,
+		   lastName,
+		 })
+		 await user.save()
+	 } 	
   
 	  // Update the profile fields
 	  profile.dateOfBirth = dateOfBirth
@@ -90,6 +95,8 @@ exports.deleteAccount = async (req, res) => {
 	}
 };
 
+
+
 exports.getAllUserDetails = async (req, res) => {
 	try {
 		const id = req.user.id;
@@ -110,9 +117,16 @@ exports.getAllUserDetails = async (req, res) => {
 	}
 };
 
+
+
+
 exports.updateDisplayPicture = async (req, res) => {
     try {
+		// console.log("enetering to display picture route");
+
       const displayPicture = req.files.displayPicture
+	//   console.log("image file name is ",req.files);
+
       const userId = req.user.id
       const image = await uploadImageToCloudinary(
         displayPicture,
@@ -139,6 +153,8 @@ exports.updateDisplayPicture = async (req, res) => {
     }
 };
   
+
+
 exports.getEnrolledCourses = async (req, res) => {
 	try {
 	  const userId = req.user.id
