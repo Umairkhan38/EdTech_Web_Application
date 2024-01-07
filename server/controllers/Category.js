@@ -1,8 +1,11 @@
 const { Mongoose } = require("mongoose");
 const Category = require("../models/Category");
+
 function getRandomInt(max) {
     return Math.floor(Math.random() * max)
   }
+
+
 
 exports.createCategory = async (req, res) => {
 	try {
@@ -16,6 +19,7 @@ exports.createCategory = async (req, res) => {
 			name: name,
 			description: description,
 		});
+    
 		console.log(CategorysDetails);
 		return res.status(200).json({
 			success: true,
@@ -28,6 +32,8 @@ exports.createCategory = async (req, res) => {
 		});
 	}
 };
+
+
 
 exports.showAllCategories = async (req, res) => {
 	try {
@@ -45,8 +51,9 @@ exports.showAllCategories = async (req, res) => {
 	}
 };
 
-//categoryPageDetails 
 
+
+//categoryPageDetails 
 exports.categoryPageDetails = async (req, res) => {
     try {
       const { categoryId } = req.body

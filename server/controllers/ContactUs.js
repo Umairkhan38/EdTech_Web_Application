@@ -1,15 +1,22 @@
 const { contactUsEmail } = require("../mail/templates/contactFormRes")
 const mailSender = require("../utils/mailSender")
+const User = require('../models/User');
+
 
 exports.contactUsController = async (req, res) => {
-  const { email, firstname, lastname, message, phoneNo, countrycode } = req.body
+  const { email, firstName, lastName, message, phoneNo, countryCode } = req.body
   console.log(req.body)
+
   try {
+
+    const adminUser = await User.findOne({accountType:"Admin"});
+    // console.log("admin is ",adminUser)
+
     const emailRes = await mailSender(
-      email,
+      adminUser.email,
       "Your Data send successfully",
-      contactUsEmail(email, firstname, lastname, message, phoneNo, countrycode)
-    )
+      contactUsEmail(adminUser.email, firstName, lastName, message, phoneNo, countryCode) )
+      
     console.log("Email Res ", emailRes)
     return res.json({
       success: true,

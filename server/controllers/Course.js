@@ -26,8 +26,9 @@ exports.createCourse = async(req,res)=>{
        })
    }
 
+    
         if(!status || status === undefined){
-          status="Draft"
+          status="Published"
         }
    
           //Check for instructor
@@ -435,6 +436,9 @@ exports.getInstructorCourses = async (req, res) => {
     })
   }
 }
+
+
+
 // Delete the Course
 exports.deleteCourse = async (req, res) => {
   try {
@@ -485,4 +489,34 @@ exports.deleteCourse = async (req, res) => {
       error: error.message,
     })
   }
+}
+
+
+
+exports.updateCourseStatus = async(req,res)=>{
+
+  try{
+    const courseDetails = await Course.findById(req.body.id);
+      if(courseDetails.status==="Draft"){
+        courseDetails.status = "Published";
+        courseDetails.save();
+        res.status(201).json({
+          success:true,
+          courseDetails
+        })
+      }else if(courseDetails.status==="Published"){
+        res.status(400).json({
+          success:false,
+          message:"Course is already Published!"
+        })
+      }
+    }
+    catch(err){
+      res.status(500).json({
+        success:false,
+        message:"cant update course status"
+      })
+      
+  }
+
 }
