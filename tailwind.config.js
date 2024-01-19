@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./src/**/*.{js,jsx,ts,tsx}"],
+  content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
     fontFamily: {
       inter: ["Inter", "sans-serif"],
@@ -96,6 +96,7 @@ module.exports = {
         800: "#4F0A25",
         900: "#340019",
       },
+      
       yellow: {
         5: "#FFF970",
         25: "#FFE83D",
@@ -110,6 +111,7 @@ module.exports = {
         800: "#3D2A01",
         900: "#251400",
       },
+
       "pure-greys": {
         5: "#F9F9F9",
         25: "#E2E2E2",
