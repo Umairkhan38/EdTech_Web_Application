@@ -2,8 +2,9 @@ import React from 'react';
 import { FaArrowRight } from "react-icons/fa6";
 import { Link } from 'react-router-dom';
 import { HighlightText } from '../Components/core/HomePage/HighlightText';
-import CTABUTTON from '../Components/core/Button';
-
+import CTABUTTON from '../Components/core/HomePage/Button';
+import Banner from '../assets/Images/banner.mp4'
+import CodeBlocks from '../Components/core/HomePage/CodeBlocks';
 
 function Home() {
   return (
@@ -36,8 +37,46 @@ function Home() {
 
           <CTABUTTON active={true} linkto={'/signup'}>Learn More</CTABUTTON>
           <CTABUTTON active={false} linkto={'/login'}>Book a Demo</CTABUTTON>
-           
+    
         </div> 
+
+        <div className = "shadow-blue-200 mx-3 my-20 shadow-[-20px_-25px_40px_-18px_rgba(0,0,0,0.3)]">
+          <video muted loop autoPlay>
+              <source src={Banner} type="video/mp4"></source>
+          </video>
+        </div>
+
+
+        {/* Code Section */}
+        <div>
+          <CodeBlocks
+            position={"lg:flex-row"}
+            heading={
+              <div data-aos="fade-right" className="text-4xl font-semibold">
+                Unlock your
+                <HighlightText text={"coding potential"} /> with our online
+                courses.
+              </div>
+            }
+            subheading={
+              "Our courses are designed and taught by industry experts who have years of experience in coding and are passionate about sharing their knowledge with you."
+            }
+            ctabtn1={{
+              text: "Try it Yourself",
+              link: "/signup",
+              active: true,
+            }}
+            ctabtn2={{
+              text: "Learn More",
+              link: "/signup",
+              active: false,
+            }}
+            codeColor={"text-yellow-25"}
+            codeblock={`<!DOCTYPE html>\n <html lang="en">\n<head>\n<title>This is myPage</title>\n</head>\n<body>\n<h1><a href="/">Header</a></h1>\n<nav> <a href="/one">One</a> <a href="/two">Two</a> <a href="/three">Three</a>\n</nav>\n</body>`}
+            backgroundGradient={<div className="codeblock1 absolute"></div>}
+          />
+        </div>
+
 
        </div> 
     </div>
