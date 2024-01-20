@@ -1,7 +1,7 @@
 import React from 'react'
 import CTABUTTON from './Button'
 import { HighlightText } from './HighlightText'
-import { FaArrowRightArrowLeft } from 'react-icons/fa6'
+// import { FaArrowRightArrowLeft } from 'react-icons/fa6'
 import { TypeAnimation } from 'react-type-animation'
 
 
@@ -56,8 +56,7 @@ function CodeBlocks({ position,content, heading, subheading, ctabtn1, ctabtn2, c
         </div>
 
         {/* Codes */}
-        <div
-          className={`w-[90%] flex flex-col gap-2 font-bold font-mono ${codeColor} pr-1`}
+        <div className={`w-[90%] flex flex-col gap-2 font-bold font-mono ${codeColor} pr-1`}
         >
           <TypeAnimation
             sequence={[codeblock, 1000, ""]}
@@ -72,34 +71,7 @@ function CodeBlocks({ position,content, heading, subheading, ctabtn1, ctabtn2, c
         </div>
       </div>
 
-           {/* Code Section 2 */}
-        <div>
-          <CodeBlocks
-            position={"lg:flex-row-reverse"}
-            heading={
-              <div data-aos="fade-left" className="w-[100%] text-4xl font-semibold lg:w-[50%]">
-                Start
-                <HighlightText text={"coding in seconds"} />
-              </div>
-            }
-            subheading={
-              "Go ahead, give it a try. Our hands-on learning environment means you'll be writing real code from your very first lesson."
-            }
-            ctabtn1={{
-              btnText: "Continue Lesson",
-              link: "/signup",
-              active: true,
-            }}
-            ctabtn2={{
-              btnText: "Learn More",
-              link: "/signup",
-              active: false,
-            }}
-            codeColor={"text-white"}
-            codeblock={`import React from "react";\n import CTAButton from "./Button";\nimport TypeAnimation from "react-type";\nimport { FaArrowRight } from "react-icons/fa";\n\nconst Home = () => {\nreturn (\n<div>Home</div>\n)\n}\nexport default Home;`}
-            backgroundGradient={<div className="codeblock2 absolute"></div>}
-          />
-        </div>
+      
        
     </div>
   )

@@ -78,6 +78,35 @@ function Home() {
         </div>
 
 
+        <div>
+          <CodeBlocks
+            position={"lg:flex-row-reverse"}
+            heading={
+              <div data-aos="fade-left" className="w-[100%] text-4xl font-semibold lg:w-[50%]">
+                Start
+                <HighlightText text={"coding in seconds"} />
+              </div>
+            }
+            subheading={
+              "Go ahead, give it a try. Our hands-on learning environment means you'll be writing real code from your very first lesson."
+            }
+            ctabtn1={{
+              text: "Continue Lesson",
+              link: "/signup",
+              active: true,
+            }}
+            ctabtn2={{
+              text: "Learn More",
+              link: "/signup",
+              active: false,
+            }}
+            codeColor={"text-white"}
+            codeblock={`import React from "react";\n import CTAButton from "./Button";\nimport TypeAnimation from "react-type";\nimport { FaArrowRight } from "react-icons/fa";\n\nconst Home = () => {\nreturn (\n<div>Home</div>\n)\n}\nexport default Home;`}
+            backgroundGradient={<div className="codeblock2 absolute"></div>}
+          />
+        </div>
+
+
        </div> 
     </div>
   )
