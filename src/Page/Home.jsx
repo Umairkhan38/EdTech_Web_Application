@@ -8,8 +8,12 @@ import CodeBlocks from '../Components/core/HomePage/CodeBlocks';
 import TimelineSection from '../Components/core/HomePage/TimeLine';
 import LearningLanguageSection from '../Components/core/HomePage/LanguageLearning';
 import Footer from '../Components/Common/Footer';
+import { TypeAnimation } from 'react-type-animation';
 
 function Home() {
+  const text = <HighlightText text={"Coding Skills"} />
+  console.log(text);
+
   return (
     <div>   
     {/* section1 */}
@@ -24,8 +28,17 @@ function Home() {
         </Link>
 
         <div data-aos="fade-right" className="mt-8 text-center text-4xl font-semibold">
-          Empower Your Future with
-          <HighlightText text={"Coding Skills"} />
+          {/* Empower Your Future with */}
+          <TypeAnimation
+            sequence={[`Empower Your Future with ${text.props.text}`, 500, ""]}
+            cursor={true}
+            repeat={Infinity}
+            style={{
+              whiteSpace: "pre-line",
+              display: "block",
+            }}
+            omitDeletionAnimation={true}
+          />
         </div>
 
         {/* Sub Heading */}
