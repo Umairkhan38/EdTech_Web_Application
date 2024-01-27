@@ -9,6 +9,9 @@ import TimelineSection from '../Components/core/HomePage/TimeLine';
 import LearningLanguageSection from '../Components/core/HomePage/LanguageLearning';
 import Footer from '../Components/Common/Footer';
 import { TypeAnimation } from 'react-type-animation';
+import ReviewSlider from '../Components/Common/reviewSlider';
+import InstructorSection from '../Components/core/HomePage/InstructionSection'; 
+
 
 function Home() {
   const text = <HighlightText text={"Coding Skills"} />
@@ -170,7 +173,17 @@ function Home() {
           </div>
           </div>
 
+          <div className="relative mx-auto my-20 flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8 bg-richblack-900 text-white">
+        {/* Become a instructor section */}
+        <InstructorSection />
 
+        {/* Reviws from Other Learner */}
+        <h1 className="text-center text-4xl font-semibold mt-8">
+          Reviews from other learners
+        </h1>
+        <ReviewSlider />
+        
+      </div>
 
             {/* Footer */}
             <Footer />
