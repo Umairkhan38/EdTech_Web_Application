@@ -11,6 +11,7 @@ import Footer from '../Components/Common/Footer';
 import { TypeAnimation } from 'react-type-animation';
 import ReviewSlider from '../Components/Common/reviewSlider';
 import InstructorSection from '../Components/core/HomePage/InstructionSection'; 
+import ExploreMore from '../Components/core/HomePage/ExploreMore';
 
 
 function Home() {
@@ -124,6 +125,9 @@ function Home() {
             backgroundGradient={<div className="codeblock2 absolute"></div>}
           />
         </div>
+
+            <ExploreMore />
+
        </div> 
 
 
@@ -168,8 +172,8 @@ function Home() {
             </div>
           </div>
           <TimelineSection />
-
           <LearningLanguageSection />
+          
           </div>
           </div>
 
